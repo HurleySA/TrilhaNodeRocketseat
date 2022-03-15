@@ -1,11 +1,9 @@
-import { response, Router } from "express";
-import { v4 as uuidV4 } from "uuid";
-
-import { Category } from "../model/Category";
-import { CategoriesRepository } from "../repositories/CategoriesRepository";
+import { Router } from "express";
+import { PostgresCategoriesRepository } from "../repositories/PostgresCategoriesRepository";
+import { CreateCategoryService } from "../services/CreateCategoryService";
 
 const categoriesRoutes = Router();
-const categoriesRepository = new CategoriesRepository();
+const categoriesRepository = new PostgresCategoriesRepository();
 
 categoriesRoutes.get("/", (request, response) => {
     const categories = categoriesRepository.list();
@@ -14,12 +12,15 @@ categoriesRoutes.get("/", (request, response) => {
 
 categoriesRoutes.post("/", (request, response) => {
     const { name, description } = request.body;
-    const existCategory = categoriesRepository.findByName(name);
-    if (existCategory) {
-        return response.status(400).send({ message: "Category already exist" });
+    const createCategoryService = new CreateCategoryService(categoriesRepository);
+    try{
+        createCategoryService.execute({name, description});
+        return response.status(201).send();
+    }catch(err){
+        return response.status(400).json(err.message)
     }
-    categoriesRepository.create({ name, description });
-    return response.status(201).send();
+    
 });
 
 export { categoriesRoutes };
+

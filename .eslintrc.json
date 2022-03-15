@@ -24,7 +24,7 @@
         "prettier/prettier": [
             "error",
             {
-                "endOfLine": "auto"
+                "endOfLine": "off"
             }],
         "camelcase": "off",
         "import/no-unresolved": "error",
@@ -56,7 +56,7 @@
         "import-helpers/order-imports": [
         "warn",
         {
-            "newlinesBetween": "always",
+            
             "groups": ["module", "/^@shared/", ["parent", "sibling", "index"]],
             "alphabetize": { "order": "asc", "ignoreCase": true }
         }
