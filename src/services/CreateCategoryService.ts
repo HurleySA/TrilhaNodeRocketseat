@@ -1,5 +1,4 @@
-import { ICategoriesRepository, ICreateCategoryDTO } from "../repositories/ICategoriesRepository";
-
+import { ICategoriesRepository, ICreateCategoryDTO } from "../modules/cars/repositories/ICategoriesRepository";
 
 
 export class CreateCategoryService{

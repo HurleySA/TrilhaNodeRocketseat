@@ -1,3 +1,0 @@
-class CategoryController {}
-
-export { CategoryController };

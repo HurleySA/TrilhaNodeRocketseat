@@ -1,4 +1,4 @@
-import { ISpescificationRepository } from "../repositories/ISpecificationRepository";
+import { ISpescificationRepository } from "../modules/cars/repositories/ISpecificationRepository";
 
 interface IRequest {
     name: string;
@@ -6,7 +6,7 @@ interface IRequest {
 }
 
 export class CreateSpecificationService{
-    constructor(private specificationsRepository: ISpescificationRepository ){}
+    constructor(private specificationsRepository: ISpescificationRepository){}
     execute({name, description}: IRequest):void{
         const specificationAlreadyExists = this.specificationsRepository.findByname(name);
         
