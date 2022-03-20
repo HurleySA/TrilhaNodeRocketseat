@@ -3,12 +3,12 @@ import { CategoriesRepository } from "../modules/cars/repositories/CategoriesRep
 import { CreateCategoryService } from "../services/CreateCategoryService";
 
 const categoriesRepository = new CategoriesRepository();
+const createCategoryService = new CreateCategoryService(categoriesRepository);
 class CreateCategoryController {
     createCategory(request:Request, response: Response){
         const { name, description } = request.body;
-        const createCategoryService = new CreateCategoryService(categoriesRepository);
         try{
-            createCategoryService.execute({name, description});
+            createCategoryService.createCategory({name, description});
             return response.status(201).send();
         }catch(err){
             return response.status(400).json(err.message)
@@ -16,13 +16,23 @@ class CreateCategoryController {
     }
 
     listCategories(request:Request, response: Response){
-        const categories = categoriesRepository.list();
-        return response.status(200).send(categories);
+        try{
+            const categories = createCategoryService.listCategories();
+            return response.status(200).send(categories);
+        }catch(err){
+            return response.status(500).json(err.message)
+        }
+        
     }
     importCategory(request:Request, response: Response){
         const { file } = request;
-        console.log(file);
-        return response.send();
+        try{
+            createCategoryService.createImport(file);
+            return response.send();
+        }catch(err){
+            return response.status(400).json(err.message)
+        }
+        
     }
     
 }
