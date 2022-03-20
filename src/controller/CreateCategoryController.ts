@@ -19,6 +19,12 @@ class CreateCategoryController {
         const categories = categoriesRepository.list();
         return response.status(200).send(categories);
     }
+    importCategory(request:Request, response: Response){
+        const { file } = request;
+        console.log(file);
+        return response.send();
+    }
+    
 }
 
 export { CreateCategoryController };
