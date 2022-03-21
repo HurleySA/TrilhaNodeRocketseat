@@ -4,6 +4,11 @@ import { Category } from "../modules/cars/model/Category";
 import { ICategoriesRepository, ICreateCategoryDTO } from "../modules/cars/repositories/ICategoriesRepository";
 "csv-parse";
 
+interface IImportData {
+    name: string,
+    description: string,
+}
+
 export class CreateCategoryService{
     constructor(private categoriesRepository: ICategoriesRepository){}
 
@@ -19,13 +24,35 @@ export class CreateCategoryService{
         return this.categoriesRepository.list();
     }
 
-    createImport(file: Express.Multer.File):void{
-        const stream = fs.createReadStream(file.path);
-        const parseFile = parse();
-        stream.pipe(parseFile);
-
-        parseFile.on("data", async (line) => {
-            console.log(line);
+    async createImport(file: Express.Multer.File):Promise<void>{
+        const categories = await this.loadFunction(file);
+        categories.map((category) => {
+            const { name, description } = category;
+            const existCategory = this.categoriesRepository.findByName(name);
+            if (!existCategory) {
+                this.categoriesRepository.create({ name, description });
+            }
         })
+    }
+
+    async loadFunction(file: Express.Multer.File):Promise<IImportData[]>{
+        return new Promise((resolve, reject) => {
+            const stream = fs.createReadStream(file.path);
+            const categories: IImportData[] = [];
+            const parseFile = parse();
+            stream.pipe(parseFile);
+
+            parseFile.on("data", async (line) => {
+                const [ name, description ] = line;
+                categories.push({
+                    name,
+                    description
+                })
+            }).on("end", () => {
+                resolve(categories);
+            }).on("error", (err) => {
+                reject(err);
+            })
+        });
     }
 }
