@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SpecificationRepository } from "../modules/cars/repositories/SpecificationRepository";
+import { SpecificationRepository } from "../repositories/SpecificationRepository";
 import { CreateSpecificationService } from "../services/CreateSpecificationService";
 
 const specificationsRepository = new SpecificationRepository();

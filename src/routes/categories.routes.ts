@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { CreateCategoryController } from "../controller/CreateCategoryController";
+import { CreateCategoryController } from "../modules/cars/controller/CreateCategoryController";
 
 
 const categoriesRoutes = Router();

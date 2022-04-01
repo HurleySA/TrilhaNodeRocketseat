@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CategoriesRepository } from "../modules/cars/repositories/CategoriesRepository";
+import { CategoriesRepository } from "../repositories/CategoriesRepository";
 import { CreateCategoryService } from "../services/CreateCategoryService";
 
 const categoriesRepository = new CategoriesRepository();

@@ -1,7 +1,7 @@
 import { parse } from "csv-parse";
 import fs from "fs";
-import { Category } from "../modules/cars/model/Category";
-import { ICategoriesRepository, ICreateCategoryDTO } from "../modules/cars/repositories/ICategoriesRepository";
+import { Category } from "../model/Category";
+import { ICategoriesRepository, ICreateCategoryDTO } from "../repositories/ICategoriesRepository";
 "csv-parse";
 
 interface IImportData {
