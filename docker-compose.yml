@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-    db_rentx:
-        container_name: database_rentx
+    database:
+        container_name: database
         image: postgres
         restart: always
         ports:
@@ -12,30 +12,20 @@ services:
             - POSTGRES_PASSWORD=1234
             - POSTGRES_DB=rentx
         volumes:
-            - pgdata:/data/postgresql
-        networks:
-            - rentx_network
+            - pgdata:/data/postgres
 
     app:
         build: .
         container_name: rentx
-        restart: always
         ports:
             - 3333:3333
-            - 9229:9229
         volumes:
-            - .:/usr/app/rentx
-        # links:
-        #   - db_rentx
-        networks:
-            - rentx_network
+            - .:/usr/app
+        links:
+            - database
         depends_on:
-            - db_rentx
+            - database
 
 volumes:
     pgdata:
         driver: local
-
-networks:
-    rentx_network:
-        driver: bridge

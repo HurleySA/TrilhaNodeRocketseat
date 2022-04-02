@@ -3,13 +3,13 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity()
 export class Category {
     @PrimaryGeneratedColumn("uuid")
-    id: string
+    id: string;
 
-    @Column()
-    name: string
+    @Column("text")
+    name: string;
 
-    @Column()
-    description: string
+    @Column("text")
+    description: string;
 
     @Column({ type: 'timestamptz' }) // Recommended
     created_at: Date;

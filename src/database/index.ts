@@ -1,14 +1,20 @@
-import { AppDataSource } from "./data-source";
+import "reflect-metadata";
+import { DataSource } from "typeorm";
 import { Category } from "./entity/Category";
 
-AppDataSource.initialize().then(async () => {
-    console.log("Inserting a new user into the database...")
-    const category: Category = new Category();
-        Object.assign(category, {
-            name:"Matheus",
-            description:"Programador",
-            created_at: new Date(),
-        });
-    await AppDataSource.manager.save(category)
 
+export const AppDataSource = new DataSource({
+    type: "postgres",
+    host: "database",
+    port: 5432,
+    username: "docker",
+    password: "1234",
+    database: "rentx",
+    synchronize: true,
+    logging: false,
+    entities: [Category],
+})
+
+AppDataSource.initialize().then(async () => {
+    console.log("Initializing the database...")
 }).catch((err)=> console.log(err))

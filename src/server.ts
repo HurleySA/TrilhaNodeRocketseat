@@ -5,6 +5,7 @@ import { router } from "./routes";
 import swaggerDocument from './swagger.json';
 
 
+
 const app = express();
 
 app.use(express.json());
