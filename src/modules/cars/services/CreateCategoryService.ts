@@ -1,6 +1,6 @@
 import { parse } from "csv-parse";
 import fs from "fs";
-import { Category } from "../model/Category";
+import { Category } from "../entities/Category";
 import { ICategoriesRepository, ICreateCategoryDTO } from "../repositories/ICategoriesRepository";
 "csv-parse";
 
@@ -12,25 +12,25 @@ interface IImportData {
 export class CreateCategoryService{
     constructor(private categoriesRepository: ICategoriesRepository){}
 
-    createCategory({name, description}:ICreateCategoryDTO):void{
-        const existCategory = this.categoriesRepository.findByName(name);
+    async createCategory({name, description}:ICreateCategoryDTO):Promise<void>{
+        const existCategory = await this.categoriesRepository.findByName(name);
         if (existCategory) {
             throw new Error("Category already exist.")
         }
         this.categoriesRepository.create({ name, description });
     }
 
-    listCategories(): Category[]{
+    async listCategories(): Promise<Category[]>{
         return this.categoriesRepository.list();
     }
 
     async createImport(file: Express.Multer.File):Promise<void>{
         const categories = await this.loadFunction(file);
-        categories.map((category) => {
+        categories.map(async (category) => {
             const { name, description } = category;
-            const existCategory = this.categoriesRepository.findByName(name);
+            const existCategory = await this.categoriesRepository.findByName(name);
             if (!existCategory) {
-                this.categoriesRepository.create({ name, description });
+                await this.categoriesRepository.create({ name, description });
             }
         })
     }

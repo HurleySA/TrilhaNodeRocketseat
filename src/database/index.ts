@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Category } from "./entity/Category";
+import { Category } from "../modules/cars/entities/Category";
 
 
 export const AppDataSource = new DataSource({
@@ -13,6 +13,8 @@ export const AppDataSource = new DataSource({
     synchronize: true,
     logging: false,
     entities: [Category],
+    migrations: ["./migrations/*.ts"],
+    migrationsTableName: "custom_migration_table",
 })
 
 AppDataSource.initialize().then(async () => {
