@@ -3,23 +3,25 @@ import { SpecificationRepository } from "../repositories/SpecificationRepository
 import { CreateSpecificationService } from "../services/CreateSpecificationService";
 
 const specificationsRepository = new SpecificationRepository();
-
+const createSpecificationService = new CreateSpecificationService(specificationsRepository);
 class CreateSpecificationController{
-    createSpecification(request:Request, response:Response){
+    async createSpecification(request:Request, response:Response){
         const { name, description} = request.body;
-
-        const createSpecificationService = new CreateSpecificationService(specificationsRepository);
-        try{
-            createSpecificationService.execute({name, description});
+         try{ 
+            await createSpecificationService.createSpecification({name, description});
             return response.status(201).send();
-        }catch(err){
+         }catch(err){
             return response.status(400).json(err.message);
-        }
+        } 
     }
 
-    listSpecification(request:Request, response: Response){
-        const categories = specificationsRepository.list();
-        return response.status(200).send(categories);
+    async listSpecification(request:Request, response: Response){
+        try{
+            const specifications = await createSpecificationService.listCategories();
+            return response.status(200).send(specifications);
+        }catch(err){
+            return response.status(500).json(err.message)
+        }
     }
 }
 

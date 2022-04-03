@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Matheus Eduardo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/typeorm
+  C:\Program Files\nodejs\node.exe C:\Users\Matheus Eduardo\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add ts-node
 
 PATH: 
   C:\Users\Matheus Eduardo\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Matheus Eduardo\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\MongoDB\Server\5.0\bin;C:\MinGW\bin;C:\Program Files\dotnet;C:\Users\Matheus Eduardo\AppData\Local\Microsoft\WindowsApps;C:\Users\Matheus Eduardo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Matheus Eduardo\AppData\Roaming\npm;C:\MinGW\bin;C:\Users\Matheus Eduardo\AppData\Local\gitkraken\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2ftypeorm: Not found
-      at Request.params.callback [as _callback] (C:\Users\Matheus Eduardo\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:67029:18)
-      at Request.self.callback (C:\Users\Matheus Eduardo\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140883:22)
-      at Request.emit (node:events:390:28)
-      at Request.<anonymous> (C:\Users\Matheus Eduardo\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141855:10)
-      at Request.emit (node:events:390:28)
-      at IncomingMessage.<anonymous> (C:\Users\Matheus Eduardo\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141777:12)
-      at Object.onceWrapper (node:events:509:28)
-      at IncomingMessage.emit (node:events:402:35)
-      at endReadableNT (node:internal/streams/readable:1343:12)
-      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Matheus Eduardo\desktop\rocketseat\trilhaNode\rentx\node_modules\.bin\ts-node-dev'
 
 npm manifest: 
   {
@@ -33,7 +23,8 @@ npm manifest:
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-      "dev": "ts-node-dev src/server.ts"
+      "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --poll --respawn src/server.ts",
+      "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
     },
     "devDependencies": {
       "@types/express": "^4.17.13",

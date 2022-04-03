@@ -17,7 +17,7 @@ export class CreateCategoryService{
         if (existCategory) {
             throw new Error("Category already exist.")
         }
-        this.categoriesRepository.create({ name, description });
+        await this.categoriesRepository.create({ name, description });
     }
 
     async listCategories(): Promise<Category[]>{

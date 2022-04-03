@@ -1,3 +1,4 @@
+import { Specification } from "../entities/Specification";
 import { ISpescificationRepository } from "../repositories/ISpecificationRepository";
 
 interface IRequest {
@@ -7,15 +8,21 @@ interface IRequest {
 
 export class CreateSpecificationService{
     constructor(private specificationsRepository: ISpescificationRepository){}
-    execute({name, description}: IRequest):void{
-        const specificationAlreadyExists = this.specificationsRepository.findByname(name);
+    async createSpecification({name, description}: IRequest):Promise<void>{
+        const specificationAlreadyExists = await this.specificationsRepository.findByname(name);
         
         if(specificationAlreadyExists){
             throw new Error("Specification already exists.")
         }
-        this.specificationsRepository.create({
+        await this.specificationsRepository.create({
             name, 
             description
         })
     }
+
+    async listCategories(): Promise<Specification[]>{
+        return await this.specificationsRepository.list();
+    }
+
+    
 }
