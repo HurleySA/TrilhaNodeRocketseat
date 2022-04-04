@@ -9,5 +9,9 @@ userRoutes.post("/", (request, response) => {
     userController.createUser(request, response);
 })
 
+userRoutes.get("/", (request, response) => {
+    userController.listUsers(request, response);
+})
+
 export { userRoutes };
 

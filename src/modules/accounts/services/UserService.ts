@@ -1,4 +1,6 @@
+import { hash } from "bcryptjs";
 import { ICreateUserDTO } from "../dto/ICreateUserDTO";
+import { User } from "../entities/User";
 import { IUserRepository } from "../repositories/IUserRepository";
 
 export class UserService {
@@ -11,14 +13,19 @@ export class UserService {
             throw new Error("User already exists.")
         }
 
+        const passwordHash = await hash(password, 8);
         await this.userRepository.create({
             name,
             username,
             email,
-            password,
+            password:passwordHash,
             driver_license
         })
 
+    }
+
+    async listCategories(): Promise<User[]>{
+        return await this.userRepository.list();
     }
 
 }
