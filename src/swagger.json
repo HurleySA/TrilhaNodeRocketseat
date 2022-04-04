@@ -72,7 +72,107 @@
                         }
                     }
                 }
-             }
+             }              
+        },
+        "/specifications":{
+            "post":{
+                "tags": ["Specification"],
+                "summary":"Create a specification",
+                "description": "Create a new Specification",
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                       "type": "string"
+                                   }
+                                }
+                            },
+                            "example":{
+                                "name": "Specification name",
+                                "description": "Specification description"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Created"
+                    },
+                    "500":{
+                        "description": "Specification already Exist"
+                    }
+                }
+                
+            },
+            "get":{
+               "tags": ["Specification"],
+               "summary":"List all specification",
+               "description": "List all specification",
+               "responses":{
+                   "200": {
+                       "description":"Sucess",
+                       "content": {
+                           "application/json":{
+                               "schema": {
+                                   "type": "array",
+                                   "items": {
+                                       "type":"object",
+                                       "properties":{
+                                           "name": {
+                                               "type": "string"
+                                           },
+                                           "description": {
+                                              "type": "string"
+                                          }
+                                       }
+                                   }
+                               }
+                           }
+                       }
+                   }
+               }
+            }
+
+            
+       },
+       "/import":{
+        "post":{
+            "tags": ["Import"],
+            "summary":"Import categories from file",
+            "description": "Import categories from file",
+            "requestBody": {
+                "content": {
+                    "multipart/form-data":{
+                        "schema": {
+                            "properties":{
+                                "file":{
+                                    "type":"array",
+                                    "items":{
+                                        "type":"string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }                      
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201":{
+                    "description": "Created"
+                },
+                "500":{
+                    "description": "Something went wrong"
+                }
+            }
+            
         }
+     }
     }
 }

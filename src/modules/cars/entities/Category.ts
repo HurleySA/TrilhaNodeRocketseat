@@ -1,10 +1,10 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
 @Entity("categories")
 class Category {
-    @PrimaryColumn()
-    id?: string;
+    @PrimaryGeneratedColumn("uuid")
+    id: string;
 
     @Column()
     name: string;
