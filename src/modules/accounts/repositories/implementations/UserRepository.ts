@@ -5,6 +5,10 @@ import { User } from "../../entities/User";
 import { IUserRepository } from "../IUserRepository";
 
 class UserRepository implements IUserRepository{
+    async findByid(id: string): Promise<User>{
+        const user = await this.repository.findOneBy({id})
+        return user;
+    }
     private repository: Repository<User>
 
     constructor() {
