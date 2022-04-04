@@ -1,3 +1,4 @@
+import { AppError } from "../../../erros/AppError";
 import { Specification } from "../entities/Specification";
 import { ISpescificationRepository } from "../repositories/ISpecificationRepository";
 
@@ -12,7 +13,7 @@ export class CreateSpecificationService{
         const specificationAlreadyExists = await this.specificationsRepository.findByname(name);
         
         if(specificationAlreadyExists){
-            throw new Error("Specification already exists.")
+            throw new AppError("Specification already exists.")
         }
         await this.specificationsRepository.create({
             name, 

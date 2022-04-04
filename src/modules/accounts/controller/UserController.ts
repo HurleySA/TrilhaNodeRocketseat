@@ -5,6 +5,14 @@ import { UserService } from "../services/UserService";
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 class UserController {
+    async listUsers(request: Request, response: Response) {
+        try{
+            const users = await userService.listCategories();
+            return response.status(200).send(users);
+        }catch(err){
+            return response.status(500).json(err.message)
+        }
+    }
     async createUser(request: Request, response: Response): Promise<Response>{
         const { name, username, password, email, driver_license } = request.body;
         try{

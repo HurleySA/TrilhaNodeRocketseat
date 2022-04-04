@@ -1,5 +1,6 @@
 import { parse } from "csv-parse";
 import fs from "fs";
+import { AppError } from "../../../erros/AppError";
 import { Category } from "../entities/Category";
 import { ICategoriesRepository, ICreateCategoryDTO } from "../repositories/ICategoriesRepository";
 "csv-parse";
@@ -15,7 +16,7 @@ export class CreateCategoryService{
     async createCategory({name, description}:ICreateCategoryDTO):Promise<void>{
         const existCategory = await this.categoriesRepository.findByName(name);
         if (existCategory) {
-            throw new Error("Category already exist.")
+            throw new AppError("Category already exist.")
         }
         await this.categoriesRepository.create({ name, description });
     }
