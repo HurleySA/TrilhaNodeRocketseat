@@ -24,6 +24,18 @@ class UserController {
 
     }
 
+    async updateUserAvatar(request: Request, response: Response): Promise<Response>{
+        try{
+            const { id } = request.user;
+            const avatar_file = request.file.filename;
+            await userService.updateUserAvatar({user_id: id, avatar_file})
+            
+            return response.status(204).send();
+        }catch(err){
+            return response.status(400).json(err.message)
+        }
+    }
+
 }
 
 export { UserController };

@@ -4,6 +4,11 @@ import { ICreateUserDTO } from "../dto/ICreateUserDTO";
 import { User } from "../entities/User";
 import { IUserRepository } from "../repositories/IUserRepository";
 
+interface IRequest {
+    user_id: string;
+    avatar_file: string;
+}
+
 export class UserService {
     constructor(private userRepository: IUserRepository){}
 
@@ -33,6 +38,14 @@ export class UserService {
 
     async listCategories(): Promise<User[]>{
         return await this.userRepository.list();
+    }
+
+    async updateUserAvatar({user_id, avatar_file}: IRequest): Promise<void>{
+        const user = await this.userRepository.findByid(user_id);
+
+        user.avatar = avatar_file;
+
+        await this.userRepository.updateUser(user);
     }
 
 }
