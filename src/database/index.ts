@@ -13,8 +13,6 @@ export const AppDataSource = new DataSource({
     username: "docker",
     password: "1234",
     database: "rentx",
-    synchronize: true,
-    logging: false,
     entities: [Category, Specification, User],
     migrations: ["src/database/migrations/*.ts"],
 })

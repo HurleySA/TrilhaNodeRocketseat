@@ -5,15 +5,21 @@ import { User } from "../../entities/User";
 import { IUserRepository } from "../IUserRepository";
 
 class UserRepository implements IUserRepository{
-    async findByid(id: string): Promise<User>{
-        const user = await this.repository.findOneBy({id})
-        return user;
-    }
+    
     private repository: Repository<User>
 
     constructor() {
         this.repository = AppDataSource.getRepository(User);
     }
+    async updateUser(user: User): Promise<void> {
+        await this.repository.save(user);
+    }
+
+    async findByid(id: string): Promise<User>{
+        const user = await this.repository.findOneBy({id})
+        return user;
+    }
+    
     async findByemail(email: string): Promise<User> {
         const user = await this.repository.findOneBy({email})
         return user;
