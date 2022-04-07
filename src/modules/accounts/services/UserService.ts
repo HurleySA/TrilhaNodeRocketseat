@@ -1,5 +1,6 @@
 import { hash } from "bcryptjs";
 import { AppError } from "../../../erros/AppError";
+import { deleteFile } from "../../../utils/file";
 import { ICreateUserDTO } from "../dto/ICreateUserDTO";
 import { User } from "../entities/User";
 import { IUserRepository } from "../repositories/IUserRepository";
@@ -42,6 +43,10 @@ export class UserService {
 
     async updateUserAvatar({user_id, avatar_file}: IRequest): Promise<void>{
         const user = await this.userRepository.findByid(user_id);
+    
+        if(user.avatar){
+            await deleteFile(`./tmp/avatar/${user.avatar}`);
+        }
 
         user.avatar = avatar_file;
 
